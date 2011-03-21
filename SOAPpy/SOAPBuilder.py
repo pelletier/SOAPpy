@@ -495,8 +495,13 @@ class SOAPBuilder:
         else:
             elemsname = tag
             
+        if isinstance(data, (list, tuple, arrayType)):
+            should_drill = True
+        else:
+            should_drill = not same_type
+        
         for i in data:
-            self.dump(i, elemsname, not same_type, ns_map)
+            self.dump(i, elemsname, should_drill, ns_map)
 
         if typed: self.out.append('</%s>\n' % tag)
 
